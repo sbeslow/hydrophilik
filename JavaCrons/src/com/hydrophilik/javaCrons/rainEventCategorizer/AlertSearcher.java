@@ -2,9 +2,11 @@ package com.hydrophilik.javaCrons.rainEventCategorizer;
 
 import com.hydrophilik.javaCrons.db.ErrorLogger;
 import com.hydrophilik.javaCrons.rainWarning.IoHourlyForecast;
-import com.hydrophilik.javaCrons.utils.TimeUtils;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by scottbeslow on 9/8/14.
@@ -48,6 +50,10 @@ public class AlertSearcher {
             }
         }
 
+        EventAlert cumulativeAlert = findCumulative(forecasts);
+        if (null != cumulativeAlert)
+            alerts.add(cumulativeAlert);
+
         return alerts;
     }
 
@@ -71,8 +77,6 @@ public class AlertSearcher {
             int endPlace = place + hours;
 
             if (endPlace > forecasts.size()) {
-                System.out.println("Done searching " + hours + "-hour for " + yearStorm + "-year storm at forecast: " +
-                        TimeUtils.convertJodaToString(forecast.getStartTime()));
                 break;
             }
 
@@ -89,6 +93,23 @@ public class AlertSearcher {
         }
 
         return alerts;
+    }
+
+    private EventAlert findCumulative(List<IoHourlyForecast> forecasts) {;
+
+        double totalPrecip = 0;
+        for (IoHourlyForecast forecast : forecasts) {
+            totalPrecip += forecast.getPrecipIntensityInchesPerHour();
+        }
+
+        List<Double> milestones = Arrays.asList(4.0, 3.0, 2.0, 1.5, 1.0, 0.5, 0.1);
+        for (Double milestone : milestones) {
+            if (totalPrecip >= milestone)
+                return new EventAlert(forecasts.get(0).getStartTime(), EventAlert.AlertType.RAIN_PER_INTERVAL,
+                        totalPrecip, 24);
+        }
+
+        return null;
     }
 
 

@@ -2,6 +2,8 @@ package com.hydrophilik.javaCrons.rainEventCategorizer;
 
 import org.joda.time.DateTime;
 
+import java.sql.Timestamp;
+
 /**
  * Created by scottbeslow on 9/8/14.
  */
@@ -22,6 +24,10 @@ public class EventAlert {
     }
 
     public String sqlInsertStatement() {
-        return null;
+        Timestamp startTimestamp = new Timestamp(startTime.getMillis());
+
+        return "INSERT INTO eventalert (starttime, alertType, value, interval)" +
+                "VALUES ('" + startTimestamp + "'," + alertType.ordinal() + "," + value + "," +
+                interval + ")";
     }
 }

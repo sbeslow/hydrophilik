@@ -45,11 +45,11 @@ public class RetrieveForecastAndReact {
 
         AlertSearcher alertSearcher = new AlertSearcher();
         List<EventAlert> alerts = alertSearcher.alertSearch(forecasts);
-        if (0 != alerts.size()) {
-            System.out.println("Alerts found");
+        if (0 == alerts.size()) {
+            System.out.println("No alerts found");
         }
         else {
-            System.out.println("No alerts found");
+            writeAlertsToDb(alerts);
         }
     }
 
@@ -117,5 +117,27 @@ public class RetrieveForecastAndReact {
         finally {
             db.close();
         }
+    }
+
+    private static void writeAlertsToDb(List<EventAlert> alerts) {
+        DbConnection db = null;
+        List<String> sqlStatements = new ArrayList<String>(alerts.size());
+
+        for (EventAlert alert : alerts) {
+            sqlStatements.add(alert.sqlInsertStatement());
+        }
+
+        try {
+            db = new DbConnection(config);
+            db.batchUpdate(sqlStatements);
+
+        }
+        catch (Exception e) {
+            ErrorLogger.logError(ExceptionUtils.getStackTrace(e), config);
+        }
+        finally {
+            db.close();
+        }
+
     }
 }
