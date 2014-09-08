@@ -2,11 +2,8 @@ package com.hydrophilik.javaCrons.utils;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
-import org.joda.time.LocalDateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
-
-import java.util.TimeZone;
 
 /**
  * Created by scottbeslow on 9/8/14.
@@ -14,7 +11,7 @@ import java.util.TimeZone;
 public class TimeUtils {
 
     // The dateStr coming in is in UTC timezone.  It will be converted to CST
-    public static DateTime convertStringToJoda(String dtStr) {
+    public static DateTime convertUtcStringToJoda(String dtStr) {
         DateTimeFormatter formatter = DateTimeFormat.forPattern("MM-dd-yyyy HH:mm:ss");
         DateTimeZone tz = DateTimeZone.forID("America/Chicago");
 

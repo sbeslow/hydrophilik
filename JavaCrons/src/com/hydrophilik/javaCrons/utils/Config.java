@@ -21,7 +21,7 @@ public class Config {
         settings = new HashMap<String, String>(configLines.size());
 
         for (String configLine : configLines) {
-            String [] pairing = configLine.split(":");
+            String [] pairing = configLine.split(";");
             if (2 != pairing.length) {
                 throw new Exception("Unable to parse configuration line: " + configLine);
             }
