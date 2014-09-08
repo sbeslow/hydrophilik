@@ -1,10 +1,12 @@
 package com.hydrophilik.javaCrons.rainWarning;
 
 import com.hydrophilik.javaCrons.db.DbConnection;
+import com.hydrophilik.javaCrons.db.ErrorLogger;
 import com.hydrophilik.javaCrons.utils.Config;
 import com.hydrophilik.javaCrons.utils.TimeUtils;
 import dme.forecastiolib.FIOHourly;
 import dme.forecastiolib.ForecastIO;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.joda.time.DateTime;
 
 import java.util.ArrayList;
@@ -21,20 +23,20 @@ public class RetrieveForecastAndReact {
 
         // 0-> Configuration file
         if (null == args[0]) {
-            System.out.println("Config file location not specified");
+            ErrorLogger.logError("Config file location not specified", config);
             return;
         }
 
         try {
             config = new Config(args[0]);
         } catch (Exception e) {
-            e.printStackTrace();
+            ErrorLogger.logError(ExceptionUtils.getStackTrace(e), config);
             return;
         }
 
         List<IoHourlyForecast> forecasts = grabForecastIoForecast();
         if ((null == forecasts) || (0 == forecasts.size())) {
-            return;
+            ErrorLogger.logError("ForecastIo Scrape came up with no entries", config);
         }
 
         writeForecastsToDb(forecasts);
@@ -57,11 +59,6 @@ public class RetrieveForecastAndReact {
         DateTime now = new DateTime();
 
         FIOHourly hourly = new FIOHourly(fio);
-        if(hourly.hours()<0)
-            System.out.println("No hourly data.");
-        else
-            System.out.println("\nHourly:\n");
-        //Print hourly data
 
         for(int i = 0; i < 24; i++) {
             String [] h = hourly.getHour(i).getFieldsArray();
@@ -76,7 +73,7 @@ public class RetrieveForecastAndReact {
                 precip = Double.parseDouble(precipStr);
             }
             catch (Exception e) {
-                // TODO: Write error here
+                ErrorLogger.logError(ExceptionUtils.getStackTrace(e), config);
                 precip = 0.0;
             }
 
@@ -104,7 +101,7 @@ public class RetrieveForecastAndReact {
 
         }
         catch (Exception e) {
-            e.printStackTrace();
+            ErrorLogger.logError(ExceptionUtils.getStackTrace(e), config);
         }
         finally {
             db.close();
