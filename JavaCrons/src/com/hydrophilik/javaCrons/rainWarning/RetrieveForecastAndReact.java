@@ -2,6 +2,8 @@ package com.hydrophilik.javaCrons.rainWarning;
 
 import com.hydrophilik.javaCrons.db.DbConnection;
 import com.hydrophilik.javaCrons.db.ErrorLogger;
+import com.hydrophilik.javaCrons.rainEventCategorizer.AlertSearcher;
+import com.hydrophilik.javaCrons.rainEventCategorizer.EventAlert;
 import com.hydrophilik.javaCrons.utils.Config;
 import com.hydrophilik.javaCrons.utils.TimeUtils;
 import dme.forecastiolib.FIOHourly;
@@ -40,6 +42,15 @@ public class RetrieveForecastAndReact {
         }
 
         writeForecastsToDb(forecasts);
+
+        AlertSearcher alertSearcher = new AlertSearcher();
+        List<EventAlert> alerts = alertSearcher.alertSearch(forecasts);
+        if (0 != alerts.size()) {
+            System.out.println("Alerts found");
+        }
+        else {
+            System.out.println("No alerts found");
+        }
     }
 
     private static List<IoHourlyForecast> grabForecastIoForecast() {

@@ -1,5 +1,6 @@
 package com.hydrophilik.javaCrons.db;
 
+import com.hydrophilik.javaCrons.rainWarning.RetrieveForecastAndReact;
 import com.hydrophilik.javaCrons.utils.Config;
 import org.joda.time.DateTime;
 
@@ -12,6 +13,10 @@ public class ErrorLogger {
 
     public static void logError(String errorDescription, Config config) {
         DbConnection db = null;
+
+        if (null == config) {
+            config = RetrieveForecastAndReact.config;
+        }
 
         try {
             db = new DbConnection(config);
