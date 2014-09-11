@@ -34,18 +34,19 @@ public abstract class NCDCPageParser {
 			return null;
 		}
 		
-		try {
-			Integer.parseInt(columns[0]);
-		}
-		catch (Exception e) {
-			return null;
-		}
-		
 		String location = columns[0];
 		String dateStr = columns[1];
-		int year = Integer.parseInt(dateStr.substring(0,4));
-		int month = Integer.parseInt(dateStr.substring(4, 6));
-		int day = Integer.parseInt(dateStr.substring(6));
+        int year;
+        int month;
+        int day;
+        try {
+            year = Integer.parseInt(dateStr.substring(0, 4));
+            month = Integer.parseInt(dateStr.substring(4, 6));
+            day = Integer.parseInt(dateStr.substring(6));
+        }
+        catch(Exception e) {
+            return null;
+        }
 
         if (9 == day) {
             System.out.println("Leap Day");

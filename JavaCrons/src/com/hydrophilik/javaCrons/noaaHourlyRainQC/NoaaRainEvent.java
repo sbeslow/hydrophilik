@@ -2,6 +2,8 @@ package com.hydrophilik.javaCrons.noaaHourlyRainQC;
 
 import org.joda.time.DateTime;
 
+import java.sql.Timestamp;
+
 /**
  * Created by scottbeslow on 9/11/14.
  */
@@ -38,4 +40,19 @@ public class NoaaRainEvent implements Comparable<NoaaRainEvent> {
         return precipitationInches;
     }
 
+    public String sqlInsertString() {
+
+        Timestamp startTimestamp = new Timestamp(startTime.getMillis());
+        Timestamp endTimestamp = new Timestamp(endTime.getMillis());
+
+        String sql = "UPDATE noaaHourlyPrecip SET precipitationInches=" + this.precipitationInches +
+                " WHERE (locationId='" + this.locationId + "' AND startTime='" + startTimestamp + "');";
+
+        sql += "INSERT INTO noaaHourlyPrecip (locationId, startTime, endTime, precipitationInches) " +
+                "VALUES ('" + this.locationId + "','" + startTimestamp + "','" + endTimestamp +
+                "'," + this.precipitationInches + ");";
+
+        return sql;
+
+    }
 }

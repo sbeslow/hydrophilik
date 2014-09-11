@@ -14,9 +14,6 @@ import org.joda.time.DateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by scottbeslow on 9/5/14.
- */
 public class RetrieveForecastAndReact {
 
     public static Config config = null;
@@ -72,13 +69,12 @@ public class RetrieveForecastAndReact {
         FIOHourly hourly = new FIOHourly(fio);
 
         for(int i = 0; i < 24; i++) {
-            String [] h = hourly.getHour(i).getFieldsArray();
 
             String timeStr = hourly.getHour(i).getByKey("time");
             DateTime time = TimeUtils.convertUtcStringToJoda(timeStr);
 
             String precipStr = hourly.getHour(i).getByKey("precipIntensity");
-            double precip = 0.0;
+            double precip;
             try {
                 precip = Double.parseDouble(precipStr);
             }
@@ -114,7 +110,7 @@ public class RetrieveForecastAndReact {
             ErrorLogger.logError(ExceptionUtils.getStackTrace(e), config);
         }
         finally {
-            db.close();
+            if (null != db) db.close();
         }
     }
 
@@ -129,13 +125,12 @@ public class RetrieveForecastAndReact {
         try {
             db = new DbConnection(config);
             db.batchUpdate(sqlStatements);
-
         }
         catch (Exception e) {
             ErrorLogger.logError(ExceptionUtils.getStackTrace(e), config);
         }
         finally {
-            db.close();
+            if (null != db) db.close();
         }
 
     }

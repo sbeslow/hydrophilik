@@ -152,7 +152,16 @@ public class NoaaDailyScrape {
         try {
             DbConnection db = new DbConnection(config);
 
-            
+            List<String> sqlStatements = new ArrayList<String>(rainEvents.size());
+
+            for (NoaaRainEvent rainEvent : rainEvents) {
+                String sql = rainEvent.sqlInsertString();
+                System.out.println(sql);
+                sqlStatements.add(sql);
+            }
+
+            db.batchUpdate(sqlStatements);
+
         }
         catch (Exception e) {
             e.printStackTrace();
