@@ -11,6 +11,8 @@ import org.joda.time.format.DateTimeFormatter;
  */
 public class TimeUtils {
 
+    public final static DateTimeZone chiTimeZone = DateTimeZone.forID("America/Chicago");
+
     // The dateStr coming in is in UTC timezone.  It will be converted to CST
     public static DateTime convertUtcStringToJoda(String dtStr) {
         DateTimeFormatter formatter = DateTimeFormat.forPattern("MM-dd-yyyy HH:mm:ss");
@@ -33,5 +35,30 @@ public class TimeUtils {
 
     public static LocalDate firstOfMonth(LocalDate date) {
         return new LocalDate(date.getYear(), date.getMonthOfYear(), 1);
+    }
+
+    public static DateTime createDateTimeFromCsv(String dateStr, int hour) {
+        Integer year = Integer.parseInt(dateStr.substring(0,4));
+        Integer month = Integer.parseInt(dateStr.substring(4, 6));
+        Integer day = Integer.parseInt(dateStr.substring(6));
+
+        boolean advanceDay = false;
+        if (24 == hour) {
+            hour = 0;
+            advanceDay = true;
+        }
+
+        DateTime retVal = null;
+
+        try {
+            retVal = new DateTime(year, month, day, hour, 0, chiTimeZone);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+        if (advanceDay)
+            retVal = retVal.plusDays(1);
+        return retVal;
     }
 }
