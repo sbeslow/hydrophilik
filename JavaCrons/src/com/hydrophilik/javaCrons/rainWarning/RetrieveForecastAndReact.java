@@ -73,7 +73,6 @@ public class RetrieveForecastAndReact {
 
         for(int i = 0; i < 24; i++) {
             String [] h = hourly.getHour(i).getFieldsArray();
-            System.out.println("Hour: " + Integer.toString(i+1));
 
             String timeStr = hourly.getHour(i).getByKey("time");
             DateTime time = TimeUtils.convertUtcStringToJoda(timeStr);

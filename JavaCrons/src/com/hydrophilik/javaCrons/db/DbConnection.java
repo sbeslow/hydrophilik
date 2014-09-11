@@ -17,8 +17,6 @@ public class DbConnection {
     public DbConnection(String connectionStr, String user, String password) throws Exception {
 
         Class.forName("org.postgresql.Driver");
-        //"jdbc:postgresql://127.0.0.1:5432/testdb", "mkyong",
-        //"123456");
 
         connection = DriverManager.getConnection(connectionStr, user, password);
 
@@ -99,5 +97,3 @@ public class DbConnection {
     }
 
 }
-
-

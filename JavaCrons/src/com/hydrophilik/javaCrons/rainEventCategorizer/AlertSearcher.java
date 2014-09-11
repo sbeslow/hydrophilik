@@ -111,6 +111,4 @@ public class AlertSearcher {
 
         return null;
     }
-
-
 }
