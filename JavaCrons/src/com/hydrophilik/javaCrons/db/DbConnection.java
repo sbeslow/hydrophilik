@@ -4,7 +4,9 @@ import com.hydrophilik.javaCrons.utils.Config;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -94,6 +96,38 @@ public class DbConnection {
                 e.printStackTrace();
             }
         }
+    }
+
+    public List<List<String>> query(String sql, int numColumns) {
+
+        Statement statement = null;
+        ResultSet rs = null;
+
+        List<List<String>> rows = new ArrayList<List<String>>();
+
+        try {
+            statement = connection.createStatement();
+            rs = statement.executeQuery(sql);
+            while (rs.next()) {
+                List<String> row = new ArrayList<String>(numColumns);
+                for (int i=1; i <= numColumns; i++) {
+                    row.add(rs.getString(i));
+                }
+                rows.add(row);
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                if (null != statement) statement.close();
+            }
+            catch (Exception e) {}
+        }
+
+        return rows;
+
     }
 
 }

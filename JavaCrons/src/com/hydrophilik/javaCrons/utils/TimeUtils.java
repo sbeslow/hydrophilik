@@ -2,6 +2,7 @@ package com.hydrophilik.javaCrons.utils;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
+import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
@@ -28,5 +29,9 @@ public class TimeUtils {
         DateTimeFormatter fmt = DateTimeFormat.forPattern("MM/dd/yyyy HH:mm:ss");
         String str = fmt.print(dt);
         return str;
+    }
+
+    public static LocalDate firstOfMonth(LocalDate date) {
+        return new LocalDate(date.getYear(), date.getMonthOfYear(), 1);
     }
 }
