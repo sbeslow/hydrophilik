@@ -13,13 +13,9 @@ import org.joda.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by scottbeslow on 9/2/14.
- */
 public class NoaaDailyScrape {
 
     private static Config config = null;
-    private static String NCDC_URL="http://cdo.ncdc.noaa.gov/qclcd/QCLCD?prior=N";
 
     public static void main(String[] args) {
 
@@ -29,7 +25,7 @@ public class NoaaDailyScrape {
             return;
         }
 
-        List<NoaaRainStation> stations = null;
+        List<NoaaRainStation> stations;
         try {
             config = new Config(args[0]);
             stations = retrieveNoaaRainStations();
@@ -72,9 +68,10 @@ public class NoaaDailyScrape {
 
         }
         catch (Exception e) {
+            e.printStackTrace();
         }
         finally {
-            dbConnection.close();
+            if (null != dbConnection) dbConnection.close();
         }
 
         if (null == rows) {
@@ -93,13 +90,15 @@ public class NoaaDailyScrape {
 
     private static void scrapeTimespan(LocalDate startDate, LocalDate endDate, String callSign, String stationId) {
 
+        String NCDC_URL="http://cdo.ncdc.noaa.gov/qclcd/QCLCD?prior=N";
+
         try {
 
             UserAgent userAgent = new UserAgent();
 
             LocalDate date = startDate.plusDays(30);
 
-            while (false == date.isAfter(endDate)) {
+            while (!date.isAfter(endDate)) {
                 userAgent.visit(NCDC_URL);
 
                 // Select Illinois
@@ -141,8 +140,8 @@ public class NoaaDailyScrape {
 
 
         } catch (Exception e) {
-            ErrorLogger.logError(ExceptionUtils.getStackTrace(e), config);
-            return;
+            ErrorLogger.logError(ExceptionUtils.getRootCauseMessage(e), config);
+            e.printStackTrace();
         }
 
     }
@@ -152,10 +151,23 @@ public class NoaaDailyScrape {
         try {
             DbConnection db = new DbConnection(config);
 
+            // At this point, all rainEvents are for a given month.  We have either written
+            // this whole month to the database before, or this is the first time.  If there
+            // are already entries for this month, update.  If not, insert.
+            boolean monthExists = false;
+            List<List<String>> existingEvent = db.query(rainEvents.get(0).sqlSelectString(),1);
+            if ((null != existingEvent) && (0 != existingEvent.size()))
+                monthExists = true;
+
             List<String> sqlStatements = new ArrayList<String>(rainEvents.size());
 
             for (NoaaRainEvent rainEvent : rainEvents) {
-                String sql = rainEvent.sqlInsertString();
+                String sql;
+                if (monthExists)
+                    sql = rainEvent.sqlUpdateString();
+                else
+                    sql = rainEvent.sqlInsertString();
+
                 System.out.println(sql);
                 sqlStatements.add(sql);
             }

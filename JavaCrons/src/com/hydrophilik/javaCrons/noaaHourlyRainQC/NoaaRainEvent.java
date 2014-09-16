@@ -40,15 +40,36 @@ public class NoaaRainEvent implements Comparable<NoaaRainEvent> {
         return precipitationInches;
     }
 
+    public String sqlUpdateString() {
+
+        Timestamp startTimestamp = new Timestamp(startTime.getMillis());
+
+        String sql = "UPDATE noaaHourlyPrecip SET precipitationInches=" + this.precipitationInches +
+                " WHERE (locationId='" + this.locationId + "' AND startTime='" + startTimestamp + "');";
+
+        return sql;
+
+    }
+
+    public String sqlSelectString() {
+        Timestamp startTimestamp = new Timestamp(startTime.getMillis());
+
+        String sql = "SELECT id FROM noaaHourlyPrecip " +
+                " WHERE (locationId='" + this.locationId + "' AND startTime='" + startTimestamp + "');";
+
+        return sql;
+
+    }
+
     public String sqlInsertString() {
 
         Timestamp startTimestamp = new Timestamp(startTime.getMillis());
         Timestamp endTimestamp = new Timestamp(endTime.getMillis());
 
-        String sql = "UPDATE noaaHourlyPrecip SET precipitationInches=" + this.precipitationInches +
-                " WHERE (locationId='" + this.locationId + "' AND startTime='" + startTimestamp + "');";
+        //String sql = "UPDATE noaaHourlyPrecip SET precipitationInches=" + this.precipitationInches +
+        //        " WHERE (locationId='" + this.locationId + "' AND startTime='" + startTimestamp + "');";
 
-        sql += "INSERT INTO noaaHourlyPrecip (locationId, startTime, endTime, precipitationInches) " +
+        String sql = "INSERT INTO noaaHourlyPrecip (locationId, startTime, endTime, precipitationInches) " +
                 "VALUES ('" + this.locationId + "','" + startTimestamp + "','" + endTimestamp +
                 "'," + this.precipitationInches + ");";
 

@@ -15,7 +15,7 @@ public class TimeUtils {
 
     // The dateStr coming in is in UTC timezone.  It will be converted to CST
     public static DateTime convertUtcStringToJoda(String dtStr) {
-        DateTimeFormatter formatter = DateTimeFormat.forPattern("MM-dd-yyyy HH:mm:ss");
+        DateTimeFormatter formatter = DateTimeFormat.forPattern("dd-MM-yyyy HH:mm:ss");
         DateTimeZone tz = DateTimeZone.forID("America/Chicago");
 
         DateTime utcDateTime = formatter.withZoneUTC().parseDateTime(dtStr);
