@@ -20,6 +20,7 @@ public class RetrieveForecastAndReact {
 
     public static void main(String[] args) {
 
+
         // 0-> Configuration file
         if (null == args[0]) {
             ErrorLogger.logError("Config file location not specified", config);
@@ -32,6 +33,8 @@ public class RetrieveForecastAndReact {
             ErrorLogger.logError(ExceptionUtils.getStackTrace(e), config);
             return;
         }
+
+        ErrorLogger.logError("Started retrieving ForecastIoWarning test", config);
 
         List<IoHourlyForecast> forecasts = grabForecastIoForecast();
         if ((null == forecasts) || (0 == forecasts.size())) {

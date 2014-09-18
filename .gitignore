@@ -12,4 +12,20 @@
 hs_err_pid*
 
 #Intellij
-.idea/
+JavaCrons/.idea/
+
+#Play Framework
+PlayServer/bin/
+PlayServer/db
+PlayServer/lib/
+PlayServer/logs/
+PlayServer/modules
+PlayServer/project/project
+PlayServer/project/target
+PlayServer/target
+PlayServertmp/
+server.pid
+PlayServer/*.iml
+PlayServer/*.eml
+PlayServer/dist/
+.cache

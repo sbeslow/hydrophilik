@@ -48,10 +48,6 @@ public abstract class NCDCPageParser {
             return null;
         }
 
-        if (9 == day) {
-            System.out.println("Leap Day");
-        }
-
 		int placeHolder = 2;
 		while (placeHolder < columns.length) {
 			int hour = placeHolder / 2;

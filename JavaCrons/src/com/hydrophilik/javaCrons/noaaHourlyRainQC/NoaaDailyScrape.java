@@ -34,6 +34,8 @@ public class NoaaDailyScrape {
             return;
         }
 
+        ErrorLogger.logError("Started Noaa Daily Scrape", config);
+
         LocalDate today = new LocalDate();
         LocalDate endDate = today.plusMonths(1);
         endDate = TimeUtils.firstOfMonth(endDate);
@@ -132,7 +134,7 @@ public class NoaaDailyScrape {
 
                 List<NoaaRainEvent> rainEvents = NCDCPageParser.parseNCDCDataPage(userAgent.doc.innerHTML());
 
-                writeRainEventsToDb(rainEvents);
+                writeRainEventsToDb(rainEvents, config);
 
                 date = date.plusMonths(1);
 
@@ -146,10 +148,10 @@ public class NoaaDailyScrape {
 
     }
 
-    private static void writeRainEventsToDb(List<NoaaRainEvent> rainEvents) {
+    public static void writeRainEventsToDb(List<NoaaRainEvent> rainEvents, Config configArg) {
 
         try {
-            DbConnection db = new DbConnection(config);
+            DbConnection db = new DbConnection(configArg);
 
             // At this point, all rainEvents are for a given month.  We have either written
             // this whole month to the database before, or this is the first time.  If there
