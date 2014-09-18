@@ -20,7 +20,6 @@ public class RetrieveForecastAndReact {
 
     public static void main(String[] args) {
 
-
         // 0-> Configuration file
         if (null == args[0]) {
             ErrorLogger.logError("Config file location not specified", config);
