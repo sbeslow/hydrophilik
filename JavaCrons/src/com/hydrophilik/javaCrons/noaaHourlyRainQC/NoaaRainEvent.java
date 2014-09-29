@@ -36,6 +36,10 @@ public class NoaaRainEvent implements Comparable<NoaaRainEvent> {
         return startTime;
     }
 
+    public DateTime getEndTime() { return endTime; }
+
+    public String getLocationId() { return locationId; }
+
     public Double getPrecipitationInches() {
         return precipitationInches;
     }

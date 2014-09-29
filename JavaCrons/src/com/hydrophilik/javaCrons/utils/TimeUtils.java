@@ -3,12 +3,10 @@ package com.hydrophilik.javaCrons.utils;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.LocalDate;
+import org.joda.time.LocalTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
-/**
- * Created by scottbeslow on 9/8/14.
- */
 public class TimeUtils {
 
     public final static DateTimeZone chiTimeZone = DateTimeZone.forID("America/Chicago");
@@ -19,9 +17,7 @@ public class TimeUtils {
         DateTimeZone tz = DateTimeZone.forID("America/Chicago");
 
         DateTime utcDateTime = formatter.withZoneUTC().parseDateTime(dtStr);
-        DateTime dateTime = new DateTime(utcDateTime, tz);
-
-        return (dateTime);
+        return new DateTime(utcDateTime, tz);
     }
 
     public static String convertJodaToString(DateTime dt) {
@@ -29,8 +25,8 @@ public class TimeUtils {
         //DateTimeZone tz = DateTimeZone.forID("America/Chicago");
 
         DateTimeFormatter fmt = DateTimeFormat.forPattern("MM/dd/yyyy HH:mm:ss");
-        String str = fmt.print(dt);
-        return str;
+        return fmt.print(dt);
+
     }
 
     public static LocalDate firstOfMonth(LocalDate date) {
@@ -60,5 +56,43 @@ public class TimeUtils {
         if (advanceDay)
             retVal = retVal.plusDays(1);
         return retVal;
+    }
+
+    // Should be arriving in the format of YYYY-MM-DD HH:MM:SS
+    public static DateTime parseTimestampString(String timestampString) {
+        String [] dateTimeSplit = timestampString.split(" ");
+        if (2 != dateTimeSplit.length)
+            return null;
+
+        String [] dateSplit = dateTimeSplit[0].split("-");
+        if (3 != dateSplit.length) {
+            return null;
+        }
+
+        String [] timeSplit = dateTimeSplit[1].split(":");
+        if (3 != timeSplit.length)
+            return null;
+
+        DateTime retVal = null;
+        try {
+            retVal = new DateTime(Integer.parseInt(dateSplit[0]),
+                    Integer.parseInt(dateSplit[1]),
+                    Integer.parseInt(dateSplit[2]),
+                    Integer.parseInt(timeSplit[0]),
+                    Integer.parseInt(timeSplit[1]),
+                    Integer.parseInt(timeSplit[2]));
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        return retVal;
+
+    }
+
+    public static String convertDateToString(LocalDate date) {
+        DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy-MM-dd");
+        return fmt.print(date);
     }
 }
