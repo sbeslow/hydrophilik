@@ -70,9 +70,6 @@ public class NoaaRainEvent implements Comparable<NoaaRainEvent> {
         Timestamp startTimestamp = new Timestamp(startTime.getMillis());
         Timestamp endTimestamp = new Timestamp(endTime.getMillis());
 
-        //String sql = "UPDATE noaaHourlyPrecip SET precipitationInches=" + this.precipitationInches +
-        //        " WHERE (locationId='" + this.locationId + "' AND startTime='" + startTimestamp + "');";
-
         String sql = "INSERT INTO noaaHourlyPrecip (locationId, startTime, endTime, precipitationInches) " +
                 "VALUES ('" + this.locationId + "','" + startTimestamp + "','" + endTimestamp +
                 "'," + this.precipitationInches + ");";

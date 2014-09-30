@@ -44,7 +44,7 @@ public class TimeUtils {
             advanceDay = true;
         }
 
-        DateTime retVal = null;
+        DateTime retVal;
 
         try {
             retVal = new DateTime(year, month, day, hour, 0, chiTimeZone);
@@ -73,7 +73,7 @@ public class TimeUtils {
         if (3 != timeSplit.length)
             return null;
 
-        DateTime retVal = null;
+        DateTime retVal;
         try {
             retVal = new DateTime(Integer.parseInt(dateSplit[0]),
                     Integer.parseInt(dateSplit[1]),
@@ -95,4 +95,27 @@ public class TimeUtils {
         DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy-MM-dd");
         return fmt.print(date);
     }
+
+    public static String convertDateToStringWithSlashes(LocalDate date) {
+        DateTimeFormatter fmt = DateTimeFormat.forPattern("MM/dd/yyyy");
+        return fmt.print(date);
+    }
+
+    public static LocalTime convertStringToLocalTime(String timeStr) {
+        String [] startSplit = timeStr.split(":");
+        return (new LocalTime(Integer.parseInt(startSplit[0]),
+                Integer.parseInt(startSplit[1])));
+    }
+
+    public static DateTime constructDateTime(LocalDate date, String militaryTimeStr) {
+        LocalTime time = convertStringToLocalTime(militaryTimeStr);
+        return createDateTime(time, date);
+    }
+
+    public static DateTime createDateTime(LocalTime time, LocalDate date) {
+        return new DateTime(date.getYear(), date.getMonthOfYear(), date.getDayOfMonth(),
+                time.getHourOfDay(), time.getMinuteOfHour(), 0, chiTimeZone);
+
+    }
+
 }
