@@ -74,23 +74,38 @@ public class MwrdCsoScraper {
     private static List<CsoEvent> createCsoEvents(Config config, LocalDate date, String location,
                 String segment, String startString, String endString, String durationStr) {
 
+        List<CsoEvent> retVal = new ArrayList<CsoEvent>();
+
         DateTime start = TimeUtils.constructDateTime(date, startString);
         DateTime end = TimeUtils.constructDateTime(date, endString);
-        Integer duration = null;
+        Integer durationFromPage = null;
         try {
-            duration = translateDurationString(durationStr);
+            durationFromPage = translateDurationString(durationStr);
         }
         catch (Exception e) {
             ErrorLogger.logError("Date: " + TimeUtils.convertDateToString(date) + "\n" + ExceptionUtils.getStackTrace(e), config);
         }
 
         int calculatedDurationMins = (int) ((end.getMillis() - start.getMillis()) / 60000);
-        if (null == duration) {
-            duration = calculatedDurationMins;
+        if ((null != durationFromPage) &&  (calculatedDurationMins != durationFromPage)) {
+            DateTime siteBasedEndTime = start.plusMinutes(durationFromPage);
+            if (siteBasedEndTime.toLocalTime().equals(end.toLocalTime())) {
+                end = siteBasedEndTime;
+            }
+            else {
+
+                ErrorLogger.logError(TimeUtils.convertJodaToString(start) + "has non-matching durations of: " +
+                        durationFromPage + " and " + calculatedDurationMins, config);
+            }
         }
-        else {
-            // TODO: This is where I left off.
+
+        if (start.toLocalDate().equals(end.toLocalDate())) {
+            retVal.add(new CsoEvent(start, end, location, segment));
+            return retVal;
         }
+
+        // TODO: If dates are not equal, this must span across several days
+
 
 
 

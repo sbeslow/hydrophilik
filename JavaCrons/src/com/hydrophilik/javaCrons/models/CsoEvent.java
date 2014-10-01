@@ -12,16 +12,10 @@ public class CsoEvent {
     private String outfallLocation;
     private String waterwaySegment;
 
-    public CsoEvent(LocalDate date, String startString, String endString, String outfallLocation,
-                    String waterwaySegment, String duration) throws Exception {
-
-        this.start = TimeUtils.constructDateTime(date, startString);
-        this.end = TimeUtils.constructDateTime(date, endString);
-        this.outfallLocation = outfallLocation;
+    public CsoEvent(DateTime start, DateTime end, String outfallLocation, String waterwaySegment) {
         this.waterwaySegment = waterwaySegment;
-
-
-
+        this.start = start;
+        this.end = end;
+        this.outfallLocation = outfallLocation;
     }
-
 }
