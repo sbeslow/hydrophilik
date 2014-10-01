@@ -31,7 +31,7 @@ public class RainApi extends Controller {
         String endDateStr = options.get("endDate");
         String location = options.get("location");
         if ((null == startDateStr) || (null == endDateStr) || (null == location)) {
-            return badRequest("Must include startDate, endDate, and locationId options in this call");
+            return badRequest("Must include startDate, endDate, and location options in this call");
         }
 
         NoaaRainStation station = getRainStationByCallSign(location);
