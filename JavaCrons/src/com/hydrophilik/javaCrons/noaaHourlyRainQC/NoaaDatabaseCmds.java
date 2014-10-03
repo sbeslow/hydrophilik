@@ -19,6 +19,9 @@ public class NoaaDatabaseCmds {
         try {
             dbCon = new DbConnection(config);
 
+            // Add one day to endTime so that the query works
+            endDate = endDate.plusDays(1);
+
             String startDateString = TimeUtils.convertDateToString(startDate);
             String endDateString = TimeUtils.convertDateToString(endDate);
 

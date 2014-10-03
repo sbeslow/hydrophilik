@@ -25,7 +25,11 @@ public class Tester {
             return;
         }
 
-        MailPerson.sendErrorEmail(config, "This is an error test of the emergency broadcast system");
+        LocalDate startDate = new LocalDate(2014, 6, 30);
+        LocalDate endDate = new LocalDate(2014, 7, 1);
+        String location = "94846";
+        List<NoaaRainEvent> rainEvents = NoaaDatabaseCmds.retrieveByDate(config, startDate, endDate, location);
+        int i = 0;
 
     }
 }
