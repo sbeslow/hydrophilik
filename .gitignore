@@ -12,6 +12,7 @@ hs_err_pid*
 
 #Intellij
 JavaCrons/.idea/
+JavaCrons/out/
 
 #Play Framework
 PlayServer/bin/
