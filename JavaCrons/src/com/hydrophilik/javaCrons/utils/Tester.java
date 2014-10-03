@@ -25,24 +25,7 @@ public class Tester {
             return;
         }
 
-        LocalDate endDate = new LocalDate();
-        LocalDate startDate = endDate.minusDays(1);
-        String locationId = "14819";
-
-        List<NoaaRainEvent> rainEvents = NoaaDatabaseCmds.retrieveByDate(config, startDate, endDate, locationId);
-        if (null == rainEvents) {
-            System.out.println("Returned null");
-            return;
-        }
-
-        for (NoaaRainEvent event : rainEvents) {
-            System.out.println(TimeUtils.convertJodaToString(event.getStartTime()) + " => " + event.getPrecipitationInches());
-        }
-
-        List<NoaaRainStation> stations = NoaaDatabaseCmds.retrieveRainStations(config);
-        for (NoaaRainStation station : stations) {
-            System.out.println(station.getCallSign() + " " + station.getLocationId());
-        }
+        MailPerson.sendErrorEmail(config, "This is an error test of the emergency broadcast system");
 
     }
 }

@@ -142,7 +142,7 @@ public class NoaaDailyScrape {
 
 
         } catch (Exception e) {
-            ErrorLogger.logError(ExceptionUtils.getRootCauseMessage(e), config);
+            ErrorLogger.logError(ExceptionUtils.getStackTrace(e), config);
             e.printStackTrace();
         }
 

@@ -32,7 +32,7 @@ public class DailyCsoScrape {
         }
 
         LocalDate date = new LocalDate(2014, 6, 30);
-        List<CsoEvent> events = MwrdCsoScraper.scrapeDate(date);
+        //List<CsoEvent> events = MwrdCsoScraper.scrapeDate(date);
 
 
 
