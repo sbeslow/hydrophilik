@@ -1,3 +1,4 @@
+/* TODO: Delete this
 package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -22,7 +23,7 @@ import java.util.Map;
 
 public class RainApi extends Controller {
 
-    private static List<NoaaRainStation> rainStations = null;
+
 
     public static Result hourlyPrecip(String optionsArg) {
 
@@ -48,38 +49,8 @@ public class RainApi extends Controller {
         LocalDate startDate;
         LocalDate endDate;
 
-        try {
-
-            startDate = TimeUtilities.parseDateInput(startDateStr);
-            endDate = TimeUtilities.parseDateInput(endDateStr);
-        }
-        catch (Exception e) {
-            return badRequest("Unable to translate dates.  They must be in the format MM-DD-YYYY");
-        }
-
-        List<NoaaRainEvent> rainEvents = NoaaDatabaseCmds.retrieveByDate(Application.config, startDate, endDate, locationId);
-        List<PrintableRainEvent> printEvents = new ArrayList<PrintableRainEvent>();
-        for (NoaaRainEvent event : rainEvents) {
-            PrintableRainEvent pEvent = new PrintableRainEvent(event);
-            printEvents.add(pEvent);
-        }
-
-        String eventString = Json.stringify(Json.toJson(printEvents));
-
-        return ok(eventString);
     }
 
-    private static NoaaRainStation getRainStationByCallSign(String callSign) {
-        if (null == rainStations) {
-            rainStations = NoaaDatabaseCmds.retrieveRainStations(Application.config);
-        }
 
-        for (NoaaRainStation station : rainStations) {
-            if (callSign.equals(station.getCallSign())) {
-                return station;
-            }
-        }
-
-        return null;
-    }
 }
+*/
