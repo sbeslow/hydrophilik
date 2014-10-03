@@ -1,6 +1,3 @@
-#splashImage {
-    background: url(/assets/images/chicagoCloudySky.jpg) no-repeat center center;
-    position: fixed;
-    width: 100%;
-    w: 350px; /*same height as jumbotron */
+.container {
+    margin-top: 100px;
 }
