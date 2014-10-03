@@ -3,8 +3,10 @@ package com.hydrophilik.javaCrons.noaaHourlyRainQC;
 import com.hydrophilik.javaCrons.db.DbConnection;
 import com.hydrophilik.javaCrons.db.ErrorLogger;
 import com.hydrophilik.javaCrons.utils.Config;
+import com.hydrophilik.javaCrons.utils.MailPerson;
 import com.hydrophilik.javaCrons.utils.TimeUtils;
 import com.jaunt.Document;
+import com.jaunt.JauntException;
 import com.jaunt.UserAgent;
 import com.jaunt.component.Form;
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -140,9 +142,9 @@ public class NoaaDailyScrape {
 
             }
 
-
         } catch (Exception e) {
-            ErrorLogger.logError(ExceptionUtils.getStackTrace(e), config);
+            ErrorLogger.logError(ExceptionUtils.getMessage(e), config);
+            MailPerson.sendErrorEmail(config, ExceptionUtils.getStackTrace(e));
             e.printStackTrace();
         }
 
