@@ -6,7 +6,6 @@ import com.hydrophilik.javaCrons.utils.Config;
 import com.hydrophilik.javaCrons.utils.MailPerson;
 import com.hydrophilik.javaCrons.utils.TimeUtils;
 import com.jaunt.Document;
-import com.jaunt.JauntException;
 import com.jaunt.UserAgent;
 import com.jaunt.component.Form;
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -38,12 +37,9 @@ public class NoaaDailyScrape {
 
         ErrorLogger.logError("Started Noaa Daily Scrape", config);
 
-        LocalDate today = new LocalDate();
-        LocalDate endDate = today.plusMonths(1);
-        endDate = TimeUtils.firstOfMonth(endDate);
-
-        LocalDate startDate = today.minusMonths(1);
-        startDate = TimeUtils.firstOfMonth(startDate);
+        LocalDate firstOfThisMonth = TimeUtils.firstOfMonth(new LocalDate());
+        LocalDate startDate = firstOfThisMonth.minusMonths(1);
+        LocalDate endDate = firstOfThisMonth.plusMonths(1).minusDays(1);
 
         System.out.println("Running scraper with start " + startDate.toString() +
             " and end " + endDate.toString());
@@ -100,14 +96,14 @@ public class NoaaDailyScrape {
 
             UserAgent userAgent = new UserAgent();
 
-            LocalDate date = startDate.plusDays(30);
+            LocalDate date = startDate;
 
             while (!date.isAfter(endDate)) {
                 userAgent.visit(NCDC_URL);
 
                 // Select Illinois
                 Document il = userAgent.doc;
-                il.select("Desired Station is Located", "Illinois");
+                il.choose("Desired Station is Located", "Illinois");
                 il.submit();
 
                 Form form = userAgent.doc.getForm(0);
