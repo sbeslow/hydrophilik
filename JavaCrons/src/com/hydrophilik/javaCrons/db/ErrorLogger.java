@@ -6,10 +6,11 @@ import org.joda.time.DateTime;
 
 import java.sql.Timestamp;
 
-/**
- * Created by scottbeslow on 9/8/14.
- */
 public class ErrorLogger {
+
+    public static void logError(String errorDescription) {
+        logError(errorDescription, Config.getConfiguration());
+    }
 
     public static void logError(String errorDescription, Config config) {
         DbConnection db = null;
@@ -30,7 +31,7 @@ public class ErrorLogger {
             e.printStackTrace();
         }
         finally {
-            db.close();
+            if (null != db) db.close();
         }
     }
 }

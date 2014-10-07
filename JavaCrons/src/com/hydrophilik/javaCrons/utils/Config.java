@@ -9,6 +9,8 @@ import java.util.Map;
  */
 public class Config {
 
+    private static Config configuration = null;
+
     private Map<String, String> settings = null;
 
     public Config(String pathToConfigfile) throws Exception {
@@ -32,5 +34,13 @@ public class Config {
 
     public String getSetting(String key) {
         return settings.get(key);
+    }
+
+    public static Config getConfiguration() {
+        return configuration;
+    }
+
+    public static void setConfiguration(Config config) throws Exception {
+        Config.configuration = config;
     }
 }

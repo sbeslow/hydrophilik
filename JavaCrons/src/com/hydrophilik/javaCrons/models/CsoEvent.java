@@ -18,4 +18,9 @@ public class CsoEvent {
         this.end = end;
         this.outfallLocation = outfallLocation;
     }
+
+    public String print() {
+        return TimeUtils.convertJodaToString(start) + " - " + TimeUtils.convertJodaToString(end) + "\n" +
+                "Outfall location: " + outfallLocation;
+    }
 }

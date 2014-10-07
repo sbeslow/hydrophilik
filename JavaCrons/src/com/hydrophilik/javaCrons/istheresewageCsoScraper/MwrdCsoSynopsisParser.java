@@ -12,29 +12,10 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 public class MwrdCsoSynopsisParser {
-	
-	//private String startDate = null;
-	//private Document doc = null;
-
-/*
-	public MwrdCsoSynopsisParser(Document doc) {
-		this.doc = doc;
-
-		startDate = getUValue(doc.getElementById("lbdate"));
-	}
-*/
 
 	public static List<CsoEvent> parseEvents(Document doc, LocalDate date) {
 
         List<CsoEvent> events = new ArrayList<CsoEvent>();
-
-        /* TODO: Delete
-		// StartDate cannot be null
-		if (null == startDate) {
-			System.out.println("ERROR: Found null start date in file\n");
-			return events;
-		}
-		*/
 		
 		// If there are no events, then nothing to do here, move on.
 		Element eventTable = doc.getElementById("DG1");
@@ -65,10 +46,10 @@ public class MwrdCsoSynopsisParser {
 				// from just one row.
 				// Example: Check out the MWRD Synopsis page for 4/18, which actually
 				// covers 4/18-4/22.
-				List<CsoEvent> newEvents = parseSynopsisRow(aTable, date);
+				CsoEvent readEvent = parseSynopsisRow(aTable, date);
 
-				for (CsoEvent anEvent : newEvents)
-					events.add(anEvent);
+                if (null != readEvent)
+                    events.add(readEvent);
 				
 			}
 		}
@@ -77,21 +58,7 @@ public class MwrdCsoSynopsisParser {
 
 	}
 	
-	private String getUValue(Element content) {
-		
-		if (null == content)
-			return null;
-		
-		Elements links = content.getElementsByTag("u");
-		String retVal = null;
-		if (null != links) {
-			retVal = links.first().text();
-		}
-		
-		return retVal;
-	}
-	
-	private static List<CsoEvent> parseSynopsisRow(String [] row, LocalDate date) {
+	private static CsoEvent parseSynopsisRow(String [] row, LocalDate date) {
 
         // The expected format of the incoming row.
         // row[0] -> Outfall Location
@@ -120,14 +87,11 @@ public class MwrdCsoSynopsisParser {
 
         int calculatedDurationMins = (int) ((end.getMillis() - start.getMillis()) / 60000);
 
-        List<CsoEvent> csoEventList = new ArrayList<CsoEvent>();
-
         // If the calculated duration and the duration from the MWRD page match, then just create
         // the event and return.
         if ((null == durationFromPageMins) || (calculatedDurationMins == durationFromPageMins)) {
 
-            csoEventList.add(new CsoEvent(start, end, outfallLocation, waterwaySegment));
-            return csoEventList;
+            return new CsoEvent(start, end, outfallLocation, waterwaySegment);
         }
 
         // If we've reached this point, then the calculated duration does not match the duration
@@ -140,20 +104,7 @@ public class MwrdCsoSynopsisParser {
         else
             end = start.plusMinutes(calculatedDurationMins);
 
-        DateTime dateTime = new DateTime(start.getMillis());
-        while (dateTime.isAfter(end)) {
-            DateTime thisEnd;
-            if (end.toLocalDate().equals(dateTime.toLocalDate())) {
-                thisEnd = end;
-            }
-            else {
-                thisEnd = TimeUtils.constructDateTime(dateTime.toLocalDate(), "23:59").plusMinutes(1);
-            }
-            csoEventList.add(new CsoEvent(dateTime, thisEnd, outfallLocation, waterwaySegment));
-            dateTime = TimeUtils.constructDateTime(dateTime.toLocalDate().plusDays(1), "0:00");
-        }
+        return new CsoEvent(start, end, outfallLocation, waterwaySegment);
 
-		
-		return csoEventList;
 	}
 }
