@@ -1,0 +1,11 @@
+forecastIoKey;blah
+dbConnectionString;jdbc:postgresql://host/tableName
+dbUser;userName
+dbPassword;password
+workingDirectory;/Temp
+errorEmailAddress;scott@orange-wall.com
+emailAddress;scott@orange-wall.com
+emailHost;host.com
+emailPort;123
+emailUser;scott@orange-wall.com
+emailPassword;password

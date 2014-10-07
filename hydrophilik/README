@@ -1,4 +1,11 @@
-This is your new Play application
-=====================================
+hydrophilik
 
-This file will be packaged with your application, when using `play dist`.
+This is a web application built using the Play! Framework version 2.2.  More information about the Play! Framework is
+located at https://www.playframework.com/
+
+In order to run this application, you must install Play! version 2.2.
+Instructions: https://www.playframework.com/documentation/2.2.x/Installing
+
+After installation if Play!, simply run the command 'play run' from this directory to run the application.
+
+This application is written in Java, Scala, Javascript, CSS, and HTML.
