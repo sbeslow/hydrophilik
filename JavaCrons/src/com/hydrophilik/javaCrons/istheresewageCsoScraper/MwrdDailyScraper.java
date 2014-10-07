@@ -1,20 +1,12 @@
-package com.hydrophilik.javaCrons.csoScraper;
+package com.hydrophilik.javaCrons.istheresewageCsoScraper;
 
-import com.hydrophilik.javaCrons.db.ErrorLogger;
-import com.hydrophilik.javaCrons.models.CsoEvent;
+
 import com.hydrophilik.javaCrons.utils.Config;
-import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.joda.time.LocalDate;
 
-import java.util.List;
-
-/**
- * Created by scottbeslow on 9/30/14.
- */
-public class DailyCsoScrape {
+public class MwrdDailyScraper {
 
     public static void main(String[] args) {
-
         Config config;
 
         // 0-> Configuration file
@@ -31,12 +23,12 @@ public class DailyCsoScrape {
             return;
         }
 
-        LocalDate date = new LocalDate(2014, 6, 30);
-        //List<CsoEvent> events = MwrdCsoScraper.scrapeDate(date);
+        // Scrape ends with todays date, and starts with one month ago
+        LocalDate endDate = new LocalDate();
+        LocalDate startDate = endDate.minusMonths(1);
 
-
-
-
+        MwrdScraper.scapeDates(startDate, endDate);
 
     }
+
 }

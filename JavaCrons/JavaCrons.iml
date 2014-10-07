@@ -12,6 +12,7 @@
     <orderEntry type="library" name="mail" level="project" />
     <orderEntry type="library" name="jaunt0.9.9.2" level="project" />
     <orderEntry type="library" name="jaunt0.9.9.2 (2)" level="project" />
+    <orderEntry type="library" name="jsoup-1.8.1" level="project" />
   </component>
 </module>
 
