@@ -6,9 +6,6 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by scottbeslow on 9/8/14.
- */
 public class DbConnection {
 
     private Connection connection = null;
@@ -39,6 +36,10 @@ public class DbConnection {
             throw (new Exception("Unable to make connection"));
         }
 
+    }
+
+    public DbConnection() throws Exception  {
+        this(Config.getConfiguration());
     }
 
     public void update(String sqlString) {
