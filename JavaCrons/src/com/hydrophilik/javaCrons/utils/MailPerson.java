@@ -9,7 +9,9 @@ import java.util.Properties;
 
 public class MailPerson {
 
-    public static void sendErrorEmail(Config config, String theMessage) {
+    public static void sendErrorEmail(String theMessage) {
+
+        Config config = Config.getConfiguration();
 
         String errorEmailAddress = config.getSetting("errorEmailAddress");
         String emailHost = config.getSetting("emailHost");

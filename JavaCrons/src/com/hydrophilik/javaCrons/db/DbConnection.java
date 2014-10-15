@@ -1,6 +1,8 @@
 package com.hydrophilik.javaCrons.db;
 
 import com.hydrophilik.javaCrons.utils.Config;
+import com.hydrophilik.javaCrons.utils.MailPerson;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -49,12 +51,14 @@ public class DbConnection {
             statement = connection.createStatement();
             statement.executeUpdate(sqlString);
         } catch (Exception e) {
-            e.printStackTrace();
+            ErrorLogger.logError(e);
         } finally {
             try {
                 if (null != statement) statement.close();
             }
-            catch (Exception e) {}
+            catch (Exception e) {
+                MailPerson.sendErrorEmail(ExceptionUtils.getStackTrace(e));
+            }
         }
     }
 
@@ -75,13 +79,15 @@ public class DbConnection {
             connection.commit();
         }
         catch (Exception e) {
-            e.printStackTrace();
+            ErrorLogger.logError(e);
         }
         finally {
             try {
                 if (null != statement) statement.close();
             }
-            catch (Exception e) {}
+            catch (Exception e) {
+                MailPerson.sendErrorEmail(ExceptionUtils.getStackTrace(e));
+            }
         }
     }
 
@@ -99,7 +105,7 @@ public class DbConnection {
     public List<List<String>> query(String sql, int numColumns) {
 
         Statement statement = null;
-        ResultSet rs = null;
+        ResultSet rs;
 
         List<List<String>> rows = new ArrayList<List<String>>();
 
@@ -115,13 +121,15 @@ public class DbConnection {
             }
         }
         catch (Exception e) {
-            e.printStackTrace();
+            ErrorLogger.logError(ExceptionUtils.getStackTrace(e));
         }
         finally {
             try {
                 if (null != statement) statement.close();
             }
-            catch (Exception e) {}
+            catch (Exception e) {
+                MailPerson.sendErrorEmail(ExceptionUtils.getStackTrace(e));
+            }
         }
 
         return rows;

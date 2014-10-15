@@ -140,7 +140,7 @@ public class NoaaDailyScrape {
 
         } catch (Exception e) {
             ErrorLogger.logError(ExceptionUtils.getMessage(e), config);
-            MailPerson.sendErrorEmail(config, ExceptionUtils.getStackTrace(e));
+            MailPerson.sendErrorEmail(ExceptionUtils.getStackTrace(e));
             e.printStackTrace();
         }
 

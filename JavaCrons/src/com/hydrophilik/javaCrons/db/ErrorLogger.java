@@ -2,6 +2,7 @@ package com.hydrophilik.javaCrons.db;
 
 import com.hydrophilik.javaCrons.rainWarning.RetrieveForecastAndReact;
 import com.hydrophilik.javaCrons.utils.Config;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.joda.time.DateTime;
 
 import java.sql.Timestamp;
@@ -33,5 +34,9 @@ public class ErrorLogger {
         finally {
             if (null != db) db.close();
         }
+    }
+
+    public static void logError(Exception e) {
+        logError(ExceptionUtils.getStackTrace(e));
     }
 }

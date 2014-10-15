@@ -37,6 +37,8 @@ public class MwrdDailyScraper {
 //        List<CsoEvent> events = scraper.scapeDates(startDate, endDate);
         LocalDate testDate = new LocalDate(2014, 6, 30);
         List<CsoEvent> events = MwrdScraper.scrapeDate(testDate);
+
+
         for (CsoEvent event : events) {
             System.out.println(event.print());
         }
