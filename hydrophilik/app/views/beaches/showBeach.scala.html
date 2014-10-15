@@ -1,0 +1,24 @@
+@(beach: Beach)
+
+@main("hydrophilik || " + beach.getName() + " Beach") {
+
+    <div class="container">
+
+        <h1 style="text-align:center;text-decoration: underline;">@beach.getName() Beach</h1>
+        <br>
+
+        <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+            <table class="table">
+                <tr class="info" ><td style="text-align:center;">Closures</td></tr>
+                @for(closure <- beach.getClosings){
+                   <tr><td>@closure.getMonthOfYear/@closure.getDayOfMonth/@closure.getYear()</td></tr>
+
+                }
+            </table>
+        </div>
+
+
+
+
+    </div>
+}

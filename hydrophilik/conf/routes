@@ -3,9 +3,12 @@
 # ~~~~
 
 # Home page
-GET        /                                controllers.Application.index()
-GET        /api                             controllers.APIs.index()
-GET        /api/QCdRain/:options               controllers.APIs.rain(options: String)
+GET        /                               controllers.Application.index()
+GET        /api                            controllers.APIs.index()
+GET        /api/QCdRain/:options           controllers.APIs.rain(options: String)
+
+GET        /beaches/list/:sortOrder        controllers.Beaches.list(sortOrder: Integer)
+GET         /beaches/:beachName             controllers.Beaches.show(beachName: String)
 
 # Map static resources from the /public folder to the /assets URL path
-GET        /assets/*file                     controllers.Assets.at(path="/public", file)
+GET        /assets/*file                   controllers.Assets.at(path="/public", file)

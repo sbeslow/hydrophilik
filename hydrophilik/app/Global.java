@@ -1,4 +1,5 @@
 import com.hydrophilik.javaCrons.utils.Config;
+import controllers.Beaches;
 import play.Application;
 import play.GlobalSettings;
 
@@ -8,8 +9,13 @@ public class Global extends GlobalSettings {
 
     @Override
     public void onStart(Application app) {
+
+
         String tempDir = "/Users/scottbeslow/Documents/OrangeWall/Hydrophilik/hydrophilikAWS.config";
         try {
+
+            Beaches.fillDatastore();
+
             File ec2Dir = new File("/home/ec2-user/hydrophilik");
             if (ec2Dir.exists()) {
                 controllers.Application.config = new Config("/home/ec2-user/hydrophilik/hydrophilikAWS.config");

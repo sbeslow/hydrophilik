@@ -1,0 +1,31 @@
+@(beachList: List[Beach], title: String)
+
+@main("hydrophilik || " + title) {
+
+
+    <div class="container">
+        <h1 style="text-align:center;text-decoration: underline;">@title</h1>
+        <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+            <table class="table table-striped">
+                <tr class="success">
+                    @if(title.contains("irtiest")){
+                        <td>Rank</td>
+                    }
+                    <td><a href="@routes.Beaches.list(Beaches.SortAlphabetical)">Beach</a></td>
+                    <td><a href="@routes.Beaches.list(Beaches.SortDirtiest)">Closings</a></td>
+
+                </tr>
+                @for(beach <- beachList){
+                    <tr>
+                        @if(title.contains("irtiest")){
+                            <td>@(beachList.indexOf(beach) + 1)</td>
+                        }
+                        <td><a href="@routes.Beaches.show(beach.getName)">@beach.getName()</a></td>
+                        <td>@beach.getClosings.size()</td>
+                    </tr>
+                }
+            </table>
+        </div>
+
+    </div>
+ }

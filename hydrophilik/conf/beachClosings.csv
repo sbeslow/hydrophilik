@@ -13,7 +13,7 @@ Humboldt Park;2014-08-25
 South Shore;2014-08-24
 63rd Street;2014-08-24
 Humboldt Park;2014-08-24
-North;2014-08-24
+North Avenue;2014-08-24
 Montrose;2014-08-24
 Foster;2014-08-24
 Calumet;2014-08-22;predictive modeling
@@ -48,14 +48,14 @@ Calumet;2014-08-09
 12th Street;2014-08-09
 Osterman;2014-08-09
 Lane;2014-08-09
-North;2014-08-08
+North Avenue;2014-08-08
 Calumet;2014-08-07
 Rainbow;2014-08-07
 South Shore;2014-08-07
 63rd Street;2014-08-07
 57th Street;2014-08-07
 12th Street;2014-08-07
-Ohio;2014-08-07
+Ohio Street;2014-08-07
 Montrose;2014-08-06
 Humboldt Park;2014-08-06
 Calumet;2014-08-05
@@ -66,7 +66,7 @@ South Shore;2014-08-05
 Oakwood;2014-08-05
 31st Street;2014-08-05
 12th Street;2014-08-05
-Ohio;2014-08-05
+Ohio Street;2014-08-05
 Montrose;2014-08-05
 Foster;2014-08-05
 Loyola;2014-08-05
@@ -104,7 +104,7 @@ Calumet;2014-07-28;Strong waves
 Humboldt Park;2014-07-27
 31st Street;2014-07-26
 Oakwood;2014-07-26
-Ohio;2014-07-26
+Ohio Street;2014-07-26
 Humboldt Park;2014-07-26
 57th Street;2014-07-26
 63rd Street;2014-07-26
@@ -122,7 +122,7 @@ Hartigan;2014-07-24
 Leone;2014-07-24
 Fargo;2014-07-24
 Howard;2014-07-24
-Rogers;2014-07-24
+Rogers Park;2014-07-24
 Juneway;2014-07-24
 Calumet;2014-07-23
 Calumet;2014-07-16
@@ -148,7 +148,7 @@ South Shore;2014-07-09
 57th Street;2014-07-09
 Oakwood;2014-07-09
 31st Street;2014-07-09
-North;2014-07-09
+North Avenue;2014-07-09
 Montrose;2014-07-09
 Rainbow;2014-07-08
 63rd Street;2014-07-08
@@ -174,14 +174,14 @@ Lane;2014-07-01
 Leone;2014-07-01
 Loyola;2014-07-01
 Montrose;2014-07-01
-North;2014-07-01
+North Avenue;2014-07-01
 North Shore;2014-07-01
 Oak Street;2014-07-01
 Oakwood;2014-07-01
 Ohio Street;2014-07-01
 Osterman;2014-07-01
 Rainbow;2014-07-01
-Rogers;2014-07-01
+Rogers Park;2014-07-01
 South Shore;2014-07-01
 Tobey Prinz;2014-07-01
 Ohio Street;2014-06-28
@@ -200,7 +200,7 @@ South Shore;2014-06-19
 57th Street;2014-06-19
 Oakwood;2014-06-19
 31st Street;2014-06-19
-North;2014-06-19
+North Avenue;2014-06-19
 Montrose;2014-06-19
 Calumet;2014-06-18
 South Shore;2014-06-18

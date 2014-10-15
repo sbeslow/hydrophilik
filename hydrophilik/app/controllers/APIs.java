@@ -32,7 +32,7 @@ public class APIs extends Controller {
         }
 
         location = location.toUpperCase();
-        NoaaRainStation station = getRainStationByCallSign(location);
+        NoaaRainStation station = NoaaRainStation.getRainStationByCallSign(location);
         if (null == station)
             return badRequest("Invalid location call sign: " + location);
 
@@ -62,17 +62,10 @@ public class APIs extends Controller {
 
     }
 
-    private static NoaaRainStation getRainStationByCallSign(String callSign) {
-        if (null == rainStations) {
-            rainStations = NoaaDatabaseCmds.retrieveRainStations(Application.config);
-        }
+    public static Result beach(String optionsArg) {
+        Map<String, String> options = UrlOptionParser.parseOptions(optionsArg);
+        String name = options.get("name");
 
-        for (NoaaRainStation station : rainStations) {
-            if (callSign.equals(station.getCallSign())) {
-                return station;
-            }
-        }
-
-        return null;
+        return TODO;
     }
 }
