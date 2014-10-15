@@ -1,0 +1,23 @@
+@(date: String)
+
+@main("hydrophilik || " + date) {
+
+    <div class="container">
+
+        <h1 style="text-align:center;text-decoration: underline;">@date</h1>
+        <br>
+
+        <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+            <table class="table">
+                <tr class="info" ><td style="text-align:center;">Closed Beaches</td></tr>
+                @for(beach <- Beaches.findByDate(date)){
+                    <tr><td>
+                        <a href="@routes.Beaches.show(beach.getName())"></a>
+                    </td></tr>
+
+                }
+            </table>
+        </div>
+
+    </div>
+}

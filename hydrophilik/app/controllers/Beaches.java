@@ -68,11 +68,26 @@ public class Beaches extends Controller {
         return ok(views.html.beaches.showBeach.render(beach));
     }
 
+    public static Result showDate(String dateStr) {
+        LocalDate date = TimeUtils.convertStringToDate(dateStr);
+        List<Beach> beachesClosed = new ArrayList<>(beaches.size());
+        for (String beachName : beaches.keySet()) {
+            Beach beach = beaches.get(beachName);
+        }
+
+        return TODO;
+    }
+
+    public static List<Beach> findByDate(String dateString) {
+
+        return new ArrayList(beaches.values());
+    }
+
     public static void fillDatastore() throws Exception {
         if (null != beaches)
             return;
 
-        beaches = new HashMap<String, Beach>(100); // TODO: Set with number of beaches
+        beaches = new HashMap<>(100); // TODO: Set with number of beaches
 
         File theFile = Play.application().getFile("conf/beachClosings.csv");
 
@@ -80,13 +95,11 @@ public class Beaches extends Controller {
 
         try {
 
-
-
             br = new BufferedReader(new FileReader(theFile));
+            String sCurrentLine;
 
-            String sCurrentLine = br.readLine();
-
-            // Skip the first line
+            // Skip the first line, which has the heading names
+            br.readLine();
 
             while ((sCurrentLine = br.readLine()) != null) {
                 String [] beachDataSplit = sCurrentLine.split(";");
@@ -96,7 +109,7 @@ public class Beaches extends Controller {
             }
 
         } catch (Exception e) {
-            throw e;
+            throw new Exception(e);
         } finally {
             try {
                 if (br != null)br.close();
